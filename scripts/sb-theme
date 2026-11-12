@@ -1,0 +1,7 @@
+# Sourced by the sb-* blocks: status2d color codes for the noir palette.
+# Keep in sync with the colors in dwm's config.h.
+ACC='^c#c9a227^'   # brass: icons
+DIM='^c#5a5a5a^'   # muted, offline
+WARN='^c#c0392b^'  # low battery
+RST='^d^'          # back to the bar's text color
+TERMINAL=${TERMINAL:-alacritty}

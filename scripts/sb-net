@@ -1,0 +1,26 @@
+#!/bin/sh
+# Wi-Fi SSID, ethernet or offline. Left click: nmtui.
+. sb-theme
+
+case $BUTTON in
+	1) setsid -f "$TERMINAL" -e nmtui ;;
+esac
+
+for dev in /sys/class/net/*; do
+	[ "$(cat "$dev/operstate" 2>/dev/null)" = up ] || continue
+	if [ -d "$dev/wireless" ]; then
+		ssid=$(nmcli -t -f TYPE,NAME connection show --active 2>/dev/null \
+			| sed -n 's/^802-11-wireless://p' | head -n1)
+		printf '%s󰖩 %s%s\n' "$ACC" "$RST" "${ssid:-wifi}"
+		exit 0
+	fi
+	case ${dev##*/} in
+		e*) eth=1 ;;
+	esac
+done
+
+if [ -n "$eth" ]; then
+	printf '%s󰈀 %seth\n' "$ACC" "$RST"
+else
+	printf '%s󰖪 offline%s\n' "$DIM" "$RST"
+fi

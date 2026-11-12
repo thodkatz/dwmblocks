@@ -1,0 +1,18 @@
+#!/bin/sh
+# Active keyboard layout (us/gr, toggled with Alt+Shift). Left click: next layout (needs xkb-switch).
+. sb-theme
+
+case $BUTTON in
+	1) command -v xkb-switch >/dev/null && xkb-switch -n ;;
+esac
+
+if command -v xkb-switch >/dev/null; then
+	layout=$(xkb-switch -p)
+else
+	# Without xkb-switch: the second group lights LED bit 0x1000 in xset's mask.
+	mask=$(xset -q 2>/dev/null | awk '/LED mask/ { print $10 }')
+	[ -n "$mask" ] || exit 0
+	if [ $((0x$mask & 0x1000)) -ne 0 ]; then layout=gr; else layout=us; fi
+fi
+
+printf '%s󰌌 %s%s\n' "$ACC" "$RST" "$(echo "$layout" | tr '[:lower:]' '[:upper:]')"

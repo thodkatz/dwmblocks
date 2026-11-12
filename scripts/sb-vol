@@ -1,0 +1,25 @@
+#!/bin/sh
+# Default sink volume. Left click: pavucontrol, middle: mute, scroll: +/-5%.
+# dwm's volume keys refresh it with: pkill -RTMIN+10 dwmblocks
+. sb-theme
+
+case $BUTTON in
+	1) setsid -f pavucontrol ;;
+	2) pactl set-sink-mute @DEFAULT_SINK@ toggle ;;
+	4) pactl set-sink-volume @DEFAULT_SINK@ +5% ;;
+	5) pactl set-sink-volume @DEFAULT_SINK@ -5% ;;
+esac
+
+vol=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | grep -o '[0-9]*%' | head -n1 | tr -d %)
+[ -n "$vol" ] || exit 0
+
+if pactl get-sink-mute @DEFAULT_SINK@ | grep -q yes; then
+	printf '%s󰝟 %d%%%s\n' "$DIM" "$vol" "$RST"
+	exit 0
+fi
+
+if [ "$vol" -ge 60 ]; then icon=󰕾
+elif [ "$vol" -ge 25 ]; then icon=󰖀
+else icon=󰕿
+fi
+printf '%s%s %s%d%%\n' "$ACC" "$icon" "$RST" "$vol"

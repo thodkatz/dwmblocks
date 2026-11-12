@@ -1,0 +1,25 @@
+#!/bin/sh
+# Battery capacity and charging state; red at 15% or less. Prints nothing without a battery.
+. sb-theme
+
+for bat in /sys/class/power_supply/BAT*; do
+	[ -r "$bat/capacity" ] || continue
+	cap=$(cat "$bat/capacity")
+	status=$(cat "$bat/status")
+
+	if [ "$status" = Charging ]; then
+		icon=󰂄
+	else
+		set -- 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹
+		i=$((cap / 10))
+		[ "$i" -lt 10 ] || i=9
+		eval "icon=\${$((i + 1))}"
+	fi
+
+	if [ "$status" != Charging ] && [ "$cap" -le 15 ]; then
+		printf '%s%s %d%%%s\n' "$WARN" "$icon" "$cap" "$RST"
+	else
+		printf '%s%s %s%d%%\n' "$ACC" "$icon" "$RST" "$cap"
+	fi
+	exit 0
+done

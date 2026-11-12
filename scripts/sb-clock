@@ -1,0 +1,10 @@
+#!/bin/sh
+# Date and time. Left click: this month's calendar as a notification.
+. sb-theme
+
+case $BUTTON in
+	1) notify-send "$(date '+%B %Y')" "$(cal | tail -n +2)" ;;
+esac
+
+# ^f6^: a few pixels of padding before the screen edge
+printf '%s󰥔 %s%s^f6^\n' "$ACC" "$RST" "$(date '+%a %d %b %H:%M')"

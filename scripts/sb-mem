@@ -1,0 +1,11 @@
+#!/bin/sh
+# Used memory (total minus available), in GiB. Left click: htop.
+. sb-theme
+
+case $BUTTON in
+	1) setsid -f "$TERMINAL" -e htop ;;
+esac
+
+used=$(awk '/^MemTotal:/ { t = $2 } /^MemAvailable:/ { a = $2 }
+	END { printf "%.1f", (t - a) / 1048576 }' /proc/meminfo)
+printf '%s󰍛 %s%sG\n' "$ACC" "$RST" "$used"

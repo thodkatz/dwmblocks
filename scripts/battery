@@ -1,4 +1,0 @@
-#!/bin/bash
-
-bat="$(acpi -b)"
-echo -e "$bat"
