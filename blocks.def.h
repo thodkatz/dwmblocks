@@ -7,6 +7,7 @@ static const Block blocks[] = {
 	{"",		"sb-net",	10,			2},
 	{"",		"sb-cpu",	5,			3},
 	{"",		"sb-mem",	10,			4},
+	{"",		"sb-bri",	30,			11}, /* dwm's brightness keys send signal 11 */
 	{"",		"sb-vol",	30,			10}, /* dwm's volume keys send signal 10 */
 	{"",		"sb-bat",	30,			5},
 	{"",		"sb-clock",	30,			6},

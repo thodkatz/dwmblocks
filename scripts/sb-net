@@ -11,7 +11,7 @@ for dev in /sys/class/net/*; do
 	if [ -d "$dev/wireless" ]; then
 		ssid=$(nmcli -t -f TYPE,NAME connection show --active 2>/dev/null \
 			| sed -n 's/^802-11-wireless://p' | head -n1)
-		printf '%s󰖩 %s%s\n' "$ACC" "$RST" "${ssid:-wifi}"
+		printf '%s%s\n' "$(ic "$C_NET" )" "${ssid:-wifi}"
 		exit 0
 	fi
 	case ${dev##*/} in
@@ -20,7 +20,7 @@ for dev in /sys/class/net/*; do
 done
 
 if [ -n "$eth" ]; then
-	printf '%s󰈀 %seth\n' "$ACC" "$RST"
+	printf '%seth\n' "$(ic "$C_NET" )"
 else
-	printf '%s󰖪 offline%s\n' "$DIM" "$RST"
+	printf '%s^c%s^offline%s\n' "$(ic "$C_DIM" 󰖪)" "$C_DIM" "$RST"
 fi

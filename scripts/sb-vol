@@ -14,12 +14,12 @@ vol=$(pactl get-sink-volume @DEFAULT_SINK@ 2>/dev/null | grep -o '[0-9]*%' | hea
 [ -n "$vol" ] || exit 0
 
 if pactl get-sink-mute @DEFAULT_SINK@ | grep -q yes; then
-	printf '%s󰝟 %d%%%s\n' "$DIM" "$vol" "$RST"
+	printf '%s^c%s^%d%%%s\n' "$(ic "$C_DIM" 󰖁)" "$C_DIM" "$vol" "$RST"
 	exit 0
 fi
 
-if [ "$vol" -ge 60 ]; then icon=󰕾
-elif [ "$vol" -ge 25 ]; then icon=󰖀
-else icon=󰕿
+if [ "$vol" -ge 60 ]; then icon=
+elif [ "$vol" -ge 25 ]; then icon=
+else icon=
 fi
-printf '%s%s %s%d%%\n' "$ACC" "$icon" "$RST" "$vol"
+printf '%s%d%%\n' "$(ic "$C_VOL" "$icon")" "$vol"

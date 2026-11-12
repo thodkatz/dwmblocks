@@ -1,0 +1,18 @@
+#!/bin/sh
+# Screen backlight, in percent. Scroll: +/-5% (needs brightnessctl). Prints nothing without a backlight.
+# dwm's brightness keys refresh it with: pkill -RTMIN+11 dwmblocks
+. sb-theme
+
+case $BUTTON in
+	4) brightnessctl -q -n 1 set +5% ;;
+	5) brightnessctl -q -n 1 set 5%- ;;
+esac
+
+for dev in /sys/class/backlight/*; do
+	[ -r "$dev/brightness" ] || continue
+	cur=$(cat "$dev/brightness")
+	max=$(cat "$dev/max_brightness")
+	[ "$max" -gt 0 ] || continue
+	printf '%s%d%%\n' "$(ic "$C_BRI" 󰖨)" $(((100 * cur + max / 2) / max))
+	exit 0
+done

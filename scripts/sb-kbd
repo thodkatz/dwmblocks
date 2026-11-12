@@ -15,4 +15,4 @@ else
 	if [ $((0x$mask & 0x1000)) -ne 0 ]; then layout=gr; else layout=us; fi
 fi
 
-printf '%s󰌌 %s%s\n' "$ACC" "$RST" "$(echo "$layout" | tr '[:lower:]' '[:upper:]')"
+printf '%s%s\n' "$(ic "$C_KBD" )" "$(echo "$layout" | tr '[:lower:]' '[:upper:]')"

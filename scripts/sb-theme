@@ -1,7 +1,17 @@
-# Sourced by the sb-* blocks: status2d color codes for the noir palette.
-# Keep in sync with the colors in dwm's config.h.
-ACC='^c#c9a227^'   # brass: icons
-DIM='^c#5a5a5a^'   # muted, offline
-WARN='^c#c0392b^'  # low battery
+# Sourced by the sb-* blocks: status2d color codes for the noir bar.
+# Each block's icon has its own color, independent of dwm's accent in config.h.
+C_KBD='#8fa1b3'    # slate
+C_NET='#6fc2b0'    # teal
+C_CPU='#e0a458'    # amber
+C_MEM='#b58ad6'    # violet
+C_BRI='#f2d25c'    # sun yellow, also charging
+C_VOL='#6fa8ef'    # blue
+C_BAT='#8cc265'    # green
+C_CLK='#c8ccd4'    # light grey
+C_DIM='#5a5a5a'    # muted, offline
+C_WARN='#e05555'   # low battery
 RST='^d^'          # back to the bar's text color
 TERMINAL=${TERMINAL:-alacritty}
+
+# ic COLOR GLYPH: the icon in its color, then a gap (^f3^: the wide glyphs overhang their cell).
+ic() { printf '^c%s^%s ^f3^%s' "$1" "$2" "$RST"; }

@@ -20,4 +20,4 @@ echo "$total $busy" > "$cache"
 
 dt=$((total - ptotal))
 [ "$dt" -gt 0 ] || dt=1
-printf '%s󰻠 %s%d%%\n' "$ACC" "$RST" $((100 * (busy - pbusy) / dt))
+printf '%s%d%%\n' "$(ic "$C_CPU" )" $((100 * (busy - pbusy) / dt))

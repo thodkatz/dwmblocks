@@ -8,18 +8,22 @@ for bat in /sys/class/power_supply/BAT*; do
 	status=$(cat "$bat/status")
 
 	if [ "$status" = Charging ]; then
-		icon=󰂄
-	else
-		set -- 󰁺 󰁻 󰁼 󰁽 󰁾 󰁿 󰂀 󰂁 󰂂 󰁹
-		i=$((cap / 10))
-		[ "$i" -lt 10 ] || i=9
-		eval "icon=\${$((i + 1))}"
+		printf '%s%d%%\n' "$(ic "$C_BRI" )" "$cap"
+		exit 0
 	fi
 
-	if [ "$status" != Charging ] && [ "$cap" -le 15 ]; then
-		printf '%s%s %d%%%s\n' "$WARN" "$icon" "$cap" "$RST"
+	# empty, quarter, half, three quarters, full
+	if [ "$cap" -ge 88 ]; then icon=
+	elif [ "$cap" -ge 63 ]; then icon=
+	elif [ "$cap" -ge 38 ]; then icon=
+	elif [ "$cap" -ge 13 ]; then icon=
+	else icon=
+	fi
+
+	if [ "$cap" -le 15 ]; then
+		printf '%s^c%s^%d%%%s\n' "$(ic "$C_WARN" "$icon")" "$C_WARN" "$cap" "$RST"
 	else
-		printf '%s%s %s%d%%\n' "$ACC" "$icon" "$RST" "$cap"
+		printf '%s%d%%\n' "$(ic "$C_BAT" "$icon")" "$cap"
 	fi
 	exit 0
 done

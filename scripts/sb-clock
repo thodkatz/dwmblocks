@@ -7,4 +7,4 @@ case $BUTTON in
 esac
 
 # ^f6^: a few pixels of padding before the screen edge
-printf '%s󰥔 %s%s^f6^\n' "$ACC" "$RST" "$(date '+%a %d %b %H:%M')"
+printf '%s%s^f6^\n' "$(ic "$C_CLK" )" "$(date '+%a %d %b %H:%M')"
