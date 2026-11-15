@@ -1,5 +1,7 @@
 #!/bin/sh
-# Battery capacity and charging state; red at 15% or less. Prints nothing without a battery.
+# Battery capacity and power state: a bolt while charging, a plug on the charger but not charging
+# (TLP's charge threshold reached, or full), the level on battery, red at 15% or less.
+# Prints nothing without a battery.
 . sb-theme
 
 for bat in /sys/class/power_supply/BAT*; do
@@ -9,6 +11,11 @@ for bat in /sys/class/power_supply/BAT*; do
 
 	if [ "$status" = Charging ]; then
 		printf '%s%d%%\n' "$(ic "$C_BRI" )" "$cap"
+		exit 0
+	fi
+
+	if [ "$status" = "Not charging" ] || [ "$status" = Full ]; then
+		printf '%s%d%%\n' "$(ic "$C_BAT" )" "$cap"
 		exit 0
 	fi
 

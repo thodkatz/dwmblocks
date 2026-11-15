@@ -20,7 +20,7 @@ dwm's accent. `make install` puts them on PATH next to
 | `sb-mem` | used memory | left: htop |
 | `sb-bri` | screen backlight | scroll: brightness |
 | `sb-vol` | default sink volume, dim when muted | left: pavucontrol, middle: mute, scroll: volume |
-| `sb-bat` | battery, red at 15% or less | |
+| `sb-bat` | battery: bolt charging, plug on the charger but not charging (charge threshold), level on battery, red at 15% or less | |
 | `sb-clock` | date and time | left: calendar notification |
 
 Needs: `ttf-hack-nerd`, `libpulse` (pactl), `networkmanager` (nmcli), `libnotify`, `brightnessctl`, `htop`,
